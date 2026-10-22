@@ -1,63 +1,59 @@
-# Mactivity
+# Folio
 
-A native macOS app for seeing what your Mac is doing: every running process with its memory and CPU, live network traffic per app, and a full picture of your internet connection.
+A note-taking app built to shine on **iPhone Duo** — compact capture on the outer display, a wide writing canvas when open, and a fold-aware split when Duo is partially folded.
 
-## Build and run
+## Why it fits Duo
 
-You need macOS 13 Ventura or later, plus Xcode or Apple's Command Line Tools.
+| Pose | Experience |
+| --- | --- |
+| **Closed (5.4″ outer)** | Compact list + push navigation. Quick capture with **New Note** pinned in the trailing toolbar. |
+| **Open (7.6″ inner)** | `ArrangementView` with `.split` — notes list beside the editor. |
+| **Partially folded** | The arrangement (and `reservedRegions(kind: .division)`) keeps each pane entirely on one side of the crease. Book and tent poses both work. |
+| **Tight toolbars** | `visibilityPriority(.high)` + `topBarPinnedTrailing` keep **New Note** visible longest, matching Apple’s Notes guidance for Duo. |
 
-In Terminal:
+Multiple scenes are enabled so Folio can participate in Duo multitasking on the inner display.
+
+## Requirements
+
+- Xcode with the **iOS 27.1 SDK** (or later) for full Duo chrome (vertical bars on the inner display)
+- iPhone Duo simulator or device, or any iOS 27 simulator to exercise compact / regular size classes
+
+## Open and run
 
 ```bash
-cd path/to/Mactivity
-bash build.sh             # builds build/Mactivity.app and opens it
-bash build.sh --install   # also copies it into /Applications
+open Folio.xcodeproj
 ```
 
-The first build takes a minute or two. You can also open `Package.swift` in Xcode and press Run to work on the code — but use `build.sh` for the real app, because only the bundled app gets the icon and can ask for the Location permission that reveals your Wi-Fi name.
+Select an **iPhone Duo** simulator (or iPhone 18 Pro for outer-style compact), then Run.
 
-## What's inside
+Set your Development Team under Signing & Capabilities if you deploy to a device.
 
-**Overview** — live CPU and network graphs, a memory breakdown (app, wired, compressed, cached), memory pressure, swap, uptime, and the top processes by memory, CPU and network.
-
-**Processes** — every process, sortable by memory, CPU, PID, user or kind. Search by name, PID, user or path; filter to All, My Processes, Apps or System. Select a row to see its full path and parent process. Quit or Force Quit from the toolbar, the right-click menu, or the Delete key.
-
-**Network** — current download and upload speed, totals since the app opened, a two-minute throughput chart, each network interface with its addresses, and a table of which apps are using the network right now.
-
-**Connection** — online / no internet / offline status, latency to the internet (1.1.1.1), your router and a web request, packet loss, a ten-minute latency chart, local and public IP, router, DNS servers, Wi-Fi details (signal, noise, link speed, channel, band, Wi-Fi standard) and a built-in speed test.
-
-## Where the numbers come from
-
-| Figure | Source |
-|---|---|
-| Process list, CPU %, resident memory | `/bin/ps` (can see every process without admin rights) |
-| Memory for your own processes | `proc_pid_rusage` physical footprint — the same figure Activity Monitor shows |
-| System CPU and memory | Mach host statistics (`host_statistics`, `host_statistics64`) |
-| Interface throughput | `getifaddrs` byte counters |
-| Per-app network traffic | macOS's built-in `nettop` |
-| Connection status | Network framework (`NWPathMonitor`) |
-| Router and DNS | SystemConfiguration dynamic store |
-| Wi-Fi details | CoreWLAN |
-
-macOS only shares the exact memory footprint of processes you own. For processes owned by the system or other users, Mactivity shows resident memory instead; the status bar says which one you're looking at when you select a process.
-
-## Network requests the app makes
-
-- `ping 1.1.1.1` and a ping to your router every 10 seconds, for latency
-- a small HTTPS request to `apple.com` every 10 seconds, to confirm the internet is reachable
-- `api.ipify.org`, to show your public IP address
-- `speed.cloudflare.com`, only when you press **Run Speed Test**
-
-Location access is used only so macOS will reveal your Wi-Fi network name. The app never reads or stores your location.
-
-## Project layout
+## What’s inside
 
 ```
-Sources/Mactivity/
-  App/        app entry point
-  Samplers/   read the raw data (processes, CPU/memory, interfaces, nettop, ping, Wi-Fi)
-  Stores/     sample on a timer and publish to the UI
-  Views/      SwiftUI screens and shared components
-Resources/    Info.plist and app icon
-build.sh      builds and signs Mactivity.app
+Sources/Folio/
+  App/           FolioApp — SwiftData container
+  Models/        Note + accent palette
+  Views/         ArrangementView shell, list, editor, fold helpers
+  Support/       Theme, first-launch sample notes
+Resources/       Info.plist, assets, app icon
+Folio.xcodeproj  iOS app target (iOS 27+)
 ```
+
+Notes are stored on-device with **SwiftData**. No account, no network.
+
+## Design notes
+
+- Cool slate paper background with a quiet grain — brand mark uses a two-leaf fold glyph
+- Serif titles for the page, system text for the body
+- Accent stripe per note (ink, moss, dusk, copper, sea)
+- Pose badge briefly labels Outer / Inner / Folded when the regular-width shell appears
+
+## Duo checklist (from Apple’s prepare guide)
+
+- [x] No `UIScreen.main` sizing
+- [x] Layout from size classes + geometry / arrangement
+- [x] Adapt to fold via `ArrangementView` and `reservedRegions`
+- [x] Toolbar visibility priorities for primary actions
+- [x] `UIApplicationSupportsMultipleScenes` enabled
+- [x] Built against iOS 27 deployment target
