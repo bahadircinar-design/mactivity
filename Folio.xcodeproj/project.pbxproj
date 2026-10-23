@@ -16,7 +16,15 @@
 		A10000000000000000000007 /* NoteEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000007 /* NoteEditorView.swift */; };
 		A10000000000000000000008 /* FoldAwareLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000008 /* FoldAwareLayout.swift */; };
 		A1000000000000000000000A /* Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000C /* Previews.swift */; };
+		A1000000000000000000000B /* PencilPaperSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000D /* PencilPaperSound.swift */; };
 		A10000000000000000000009 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000009 /* Assets.xcassets */; };
+		A1000000000000000000000C /* Caveat-Variable.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000E /* Caveat-Variable.ttf */; };
+		A1000000000000000000000D /* MaShanZheng-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000F /* MaShanZheng-Regular.ttf */; };
+		A1000000000000000000000E /* pencil-tap.wav in Resources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000010 /* pencil-tap.wav */; };
+		A1000000000000000000000F /* pencil-scratch-a.wav in Resources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000011 /* pencil-scratch-a.wav */; };
+		A10000000000000000000010 /* pencil-scratch-b.wav in Resources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000012 /* pencil-scratch-b.wav */; };
+		A10000000000000000000011 /* pencil-scratch-c.wav in Resources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000013 /* pencil-scratch-c.wav */; };
+		A10000000000000000000012 /* pencil-drag.wav in Resources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000014 /* pencil-drag.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,9 +37,17 @@
 		A20000000000000000000007 /* NoteEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditorView.swift; sourceTree = "<group>"; };
 		A20000000000000000000008 /* FoldAwareLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldAwareLayout.swift; sourceTree = "<group>"; };
 		A2000000000000000000000C /* Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Previews.swift; sourceTree = "<group>"; };
+		A2000000000000000000000D /* PencilPaperSound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PencilPaperSound.swift; sourceTree = "<group>"; };
 		A20000000000000000000009 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A2000000000000000000000A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2000000000000000000000B /* Folio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Folio.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2000000000000000000000E /* Caveat-Variable.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Caveat-Variable.ttf"; sourceTree = "<group>"; };
+		A2000000000000000000000F /* MaShanZheng-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MaShanZheng-Regular.ttf"; sourceTree = "<group>"; };
+		A20000000000000000000010 /* pencil-tap.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "pencil-tap.wav"; sourceTree = "<group>"; };
+		A20000000000000000000011 /* pencil-scratch-a.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "pencil-scratch-a.wav"; sourceTree = "<group>"; };
+		A20000000000000000000012 /* pencil-scratch-b.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "pencil-scratch-b.wav"; sourceTree = "<group>"; };
+		A20000000000000000000013 /* pencil-scratch-c.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "pencil-scratch-c.wav"; sourceTree = "<group>"; };
+		A20000000000000000000014 /* pencil-drag.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "pencil-drag.wav"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +122,7 @@
 			children = (
 				A20000000000000000000003 /* Theme.swift */,
 				A20000000000000000000004 /* NoteSeed.swift */,
+				A2000000000000000000000D /* PencilPaperSound.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -115,8 +132,31 @@
 			children = (
 				A20000000000000000000009 /* Assets.xcassets */,
 				A2000000000000000000000A /* Info.plist */,
+				A4000000000000000000000A /* Fonts */,
+				A4000000000000000000000B /* Sounds */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		A4000000000000000000000A /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				A2000000000000000000000E /* Caveat-Variable.ttf */,
+				A2000000000000000000000F /* MaShanZheng-Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		A4000000000000000000000B /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000010 /* pencil-tap.wav */,
+				A20000000000000000000011 /* pencil-scratch-a.wav */,
+				A20000000000000000000012 /* pencil-scratch-b.wav */,
+				A20000000000000000000013 /* pencil-scratch-c.wav */,
+				A20000000000000000000014 /* pencil-drag.wav */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 		A40000000000000000000009 /* Products */ = {
@@ -186,6 +226,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				A10000000000000000000009 /* Assets.xcassets in Resources */,
+				A1000000000000000000000C /* Caveat-Variable.ttf in Resources */,
+				A1000000000000000000000D /* MaShanZheng-Regular.ttf in Resources */,
+				A1000000000000000000000E /* pencil-tap.wav in Resources */,
+				A1000000000000000000000F /* pencil-scratch-a.wav in Resources */,
+				A10000000000000000000010 /* pencil-scratch-b.wav in Resources */,
+				A10000000000000000000011 /* pencil-scratch-c.wav in Resources */,
+				A10000000000000000000012 /* pencil-drag.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,6 +247,7 @@
 				A10000000000000000000002 /* Note.swift in Sources */,
 				A10000000000000000000003 /* Theme.swift in Sources */,
 				A10000000000000000000004 /* NoteSeed.swift in Sources */,
+				A1000000000000000000000B /* PencilPaperSound.swift in Sources */,
 				A10000000000000000000005 /* ContentView.swift in Sources */,
 				A10000000000000000000006 /* NoteListView.swift in Sources */,
 				A10000000000000000000007 /* NoteEditorView.swift in Sources */,

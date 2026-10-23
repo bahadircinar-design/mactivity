@@ -37,7 +37,7 @@ struct FoldAwareSplit<Leading: View, Trailing: View>: View {
                         leading()
                             .frame(width: min(proxy.size.width * 0.36, 340))
                         Rectangle()
-                            .fill(FolioTheme.hairline)
+                            .fill(FolioTheme.sealRed.opacity(0.22))
                             .frame(width: 1)
                         trailing()
                     }
@@ -46,7 +46,7 @@ struct FoldAwareSplit<Leading: View, Trailing: View>: View {
                         leading()
                             .frame(height: proxy.size.height * 0.38)
                         Rectangle()
-                            .fill(FolioTheme.hairline)
+                            .fill(FolioTheme.sealRed.opacity(0.22))
                             .frame(height: 1)
                         trailing()
                     }

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Folio — Chinese paper mockups</title>
+<style>
+  @font-face {
+    font-family: "Caveat";
+    src: url("../Resources/Fonts/Caveat-Variable.ttf") format("truetype");
+    font-weight: 400 700;
+  }
+  @font-face {
+    font-family: "Ma Shan Zheng";
+    src: url("../Resources/Fonts/MaShanZheng-Regular.ttf") format("truetype");
+    font-weight: 400;
+  }
+  :root {
+    --paper: rgb(246, 241, 230);
+    --paper-deep: rgb(236, 228, 213);
+    --ink: rgb(31, 26, 28);
+    --ink-soft: rgb(97, 82, 77);
+    --seal: rgb(199, 56, 51);
+    --grid: rgba(209, 77, 66, 0.38);
+    --moss: rgb(56, 102, 77);
+    --dusk: rgb(87, 71, 117);
+    --sea: rgb(51, 102, 122);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Caveat", "Ma Shan Zheng", cursive; background: #1a1d22; color: var(--ink); }
+  .stage {
+    display: none; min-height: 100vh; align-items: center; justify-content: center;
+    padding: 48px; flex-direction: column; gap: 28px;
+    background:
+      radial-gradient(ellipse at 30% 20%, #2a3038 0%, transparent 50%),
+      #14171c;
+  }
+  .stage.active { display: flex; }
+  .label {
+    font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    color: rgba(255,255,255,0.72); font-size: 13px; letter-spacing: 0.14em;
+    text-transform: uppercase; text-align: center;
+  }
+  .device {
+    position: relative; background: #0b0d10; border-radius: 44px; padding: 12px;
+    box-shadow: 0 0 0 2px #3a3f48, 0 40px 80px rgba(0,0,0,0.55);
+  }
+  .screen {
+    position: relative; overflow: hidden; border-radius: 34px; background: var(--paper);
+  }
+  .paper-layer {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 55px, var(--grid) 55px, var(--grid) 56px),
+      repeating-linear-gradient(90deg, transparent, transparent 55px, var(--grid) 55px, var(--grid) 56px),
+      repeating-linear-gradient(45deg, transparent, transparent 38px, rgba(199,56,51,0.08) 38px, rgba(199,56,51,0.08) 39px),
+      repeating-linear-gradient(-45deg, transparent, transparent 38px, rgba(199,56,51,0.08) 38px, rgba(199,56,51,0.08) 39px);
+    opacity: 0.95;
+  }
+  .paper-fiber {
+    position: absolute; inset: 0; pointer-events: none; opacity: 0.45;
+    background-image: radial-gradient(circle at 1px 1px, rgba(40,30,20,0.07) 1px, transparent 0);
+    background-size: 14px 14px;
+  }
+  .screen > .ui { position: relative; z-index: 1; height: 100%; display: flex; flex-direction: column; }
+
+  .outer .device { width: 390px; }
+  .outer .screen { width: 366px; height: 700px; }
+  .inner .device, .folded .device { width: 980px; }
+  .inner .screen, .folded .screen { width: 956px; height: 640px; }
+
+  .status {
+    font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    display: flex; justify-content: space-between; padding: 14px 22px 6px;
+    font-size: 12px; font-weight: 600;
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; padding: 4px 16px 8px; }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand-name { font-family: "Ma Shan Zheng", cursive; font-size: 34px; line-height: 1; }
+  .sub { font-family: "Caveat", cursive; font-size: 14px; color: var(--seal); margin-top: -2px; }
+  .count { font-family: "Caveat", cursive; font-size: 16px; color: var(--ink-soft); }
+  .toolbar { display: flex; justify-content: flex-end; gap: 10px; padding: 0 14px 10px; }
+  .btn {
+    border: none; background: var(--seal); color: var(--paper); border-radius: 999px;
+    padding: 8px 14px; font-family: "Caveat", cursive; font-size: 20px; font-weight: 600;
+  }
+  .btn.ghost { background: transparent; color: var(--ink-soft); border: 1px solid rgba(0,0,0,0.08); }
+  .search {
+    margin: 0 16px 10px; background: rgba(255,255,255,0.4); border: 1px solid rgba(199,56,51,0.18);
+    border-radius: 12px; padding: 10px 12px; color: var(--ink-soft); font-size: 20px;
+  }
+  .list { padding: 4px 12px 20px; flex: 1; overflow: hidden; }
+  .row { display: flex; gap: 12px; padding: 12px 10px; border-radius: 10px; }
+  .row.selected { background: rgba(236,228,213,0.85); box-shadow: inset 0 0 0 1px rgba(199,56,51,0.28); }
+  .accent { width: 3px; border-radius: 2px; margin-top: 2px; height: 48px; }
+  .accent.moss { background: var(--moss); }
+  .accent.sea { background: var(--sea); }
+  .accent.dusk { background: var(--dusk); }
+  .row-title { font-family: "Ma Shan Zheng", cursive; font-size: 24px; display: flex; gap: 6px; align-items: center; }
+  .row-preview { font-size: 20px; color: var(--ink-soft); margin-top: 2px; line-height: 1.25; }
+  .row-meta { font-size: 15px; color: rgba(97,82,77,0.85); margin-top: 2px; }
+  .divider { height: 1px; background: var(--grid); margin-left: 25px; }
+
+  .split { display: grid; flex: 1; min-height: 0; }
+  .inner .split { grid-template-columns: 340px 1px 1fr; }
+  .folded .split { grid-template-columns: 1fr 18px 1fr; }
+  .gutter { background: linear-gradient(90deg, transparent, rgba(199,56,51,0.18), transparent); }
+  .folded .gutter {
+    background: linear-gradient(90deg, rgba(0,0,0,0.06), rgba(199,56,51,0.28), rgba(0,0,0,0.06));
+  }
+  .pane { min-width: 0; overflow: hidden; display: flex; flex-direction: column; }
+  .stripe { height: 3px; background: var(--moss); }
+  .editor-body { padding: 22px 28px 40px; }
+  .editor-title { font-family: "Ma Shan Zheng", cursive; font-size: 36px; margin-bottom: 12px; }
+  .editor-text { font-size: 26px; line-height: 1.45; white-space: pre-wrap; }
+  .editor-meta { font-size: 16px; color: rgba(97,82,77,0.8); margin-top: 22px; }
+  .pose-badge {
+    font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    position: absolute; top: 54px; right: 16px; z-index: 2;
+    font-size: 10px; font-weight: 650; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 5px 10px; border-radius: 999px; background: rgba(255,255,255,0.55);
+    color: var(--ink-soft); border: 1px solid rgba(199,56,51,0.2);
+  }
+</style>
+</head>
+<body>
+
+<section class="stage outer active" id="outer">
+  <div class="label">Outer · rice paper capture</div>
+  <div class="device"><div class="screen">
+    <div class="paper-layer"></div><div class="paper-fiber"></div>
+    <div class="ui">
+      <div class="status"><span>9:41</span><span>■■■</span></div>
+      <div class="nav">
+        <div class="brand">
+          <div>
+            <div class="brand-name">Folio</div>
+            <div class="sub">宣纸 · 手札</div>
+          </div>
+        </div>
+        <div class="count">3 notes</div>
+      </div>
+      <div class="toolbar"><button class="btn">✎ New Note</button></div>
+      <div class="search">Search notes</div>
+      <div class="list">
+        <div class="row selected"><div class="accent moss"></div><div>
+          <div class="row-title">📌 宣纸上的 Folio</div>
+          <div class="row-preview">Warm rice fiber, faint 米字格…</div>
+          <div class="row-meta">Updated 2 min ago</div>
+        </div></div>
+        <div class="divider"></div>
+        <div class="row"><div class="accent sea"></div><div>
+          <div class="row-title">Tent-mode grocery list</div>
+          <div class="row-preview">Oat milk · Soft tortillas…</div>
+          <div class="row-meta">Updated yesterday</div>
+        </div></div>
+        <div class="divider"></div>
+        <div class="row"><div class="accent dusk"></div><div>
+          <div class="row-title">Walk notes</div>
+          <div class="row-preview">The light on the water…</div>
+          <div class="row-meta">Updated 3 days ago</div>
+        </div></div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<section class="stage inner" id="inner">
+  <div class="label">Inner · ArrangementView on 米字格</div>
+  <div class="device"><div class="screen">
+    <div class="paper-layer"></div><div class="paper-fiber"></div>
+    <div class="pose-badge">Inner canvas</div>
+    <div class="ui">
+      <div class="status"><span>9:41</span><span>Duo · Folio</span><span>■■■</span></div>
+      <div class="split">
+        <div class="pane">
+          <div class="nav">
+            <div class="brand"><div><div class="brand-name" style="font-size:28px">Folio</div><div class="sub">宣纸 · 手札</div></div></div>
+            <div class="count">3 notes</div>
+          </div>
+          <div class="toolbar"><button class="btn ghost">Pin</button><button class="btn">✎ New Note</button></div>
+          <div class="search">Search notes</div>
+          <div class="list">
+            <div class="row selected"><div class="accent moss"></div><div>
+              <div class="row-title">📌 宣纸上的 Folio</div>
+              <div class="row-preview">Write with Apple Pencil…</div>
+              <div class="row-meta">Updated 2 min ago</div>
+            </div></div>
+            <div class="divider"></div>
+            <div class="row"><div class="accent sea"></div><div>
+              <div class="row-title">Tent-mode grocery list</div>
+              <div class="row-preview">Prop Duo like a laptop…</div>
+              <div class="row-meta">Updated yesterday</div>
+            </div></div>
+          </div>
+        </div>
+        <div class="gutter"></div>
+        <div class="pane">
+          <div class="stripe"></div>
+          <div class="editor-body">
+            <div class="editor-title">宣纸上的 Folio</div>
+            <div class="editor-text">Folio opens like a sheet of Chinese practice paper — warm rice fiber, faint 米字格, vermilion guides.
+
+With Apple Pencil, each stroke answers with a soft pencil-on-paper sound.
+
+写吧。The grid is waiting.</div>
+            <div class="editor-meta">Updated Oct 22, 2026 · Caveat handwriting on the sheet</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<section class="stage folded" id="folded">
+  <div class="label">Folded · equal panes on the crease</div>
+  <div class="device"><div class="screen">
+    <div class="paper-layer"></div><div class="paper-fiber"></div>
+    <div class="pose-badge">Folded split</div>
+    <div class="ui">
+      <div class="status"><span>9:41</span><span>Duo · Folio</span><span>■■■</span></div>
+      <div class="split">
+        <div class="pane">
+          <div class="nav">
+            <div class="brand"><div><div class="brand-name" style="font-size:28px">Folio</div><div class="sub">宣纸 · 手札</div></div></div>
+            <div class="count">3 notes</div>
+          </div>
+          <div class="toolbar"><button class="btn">✎ New Note</button></div>
+          <div class="search">Search notes</div>
+          <div class="list">
+            <div class="row selected"><div class="accent moss"></div><div>
+              <div class="row-title">📌 宣纸上的 Folio</div>
+              <div class="row-preview">Nothing stretches across the crease.</div>
+              <div class="row-meta">Updated 2 min ago</div>
+            </div></div>
+            <div class="divider"></div>
+            <div class="row"><div class="accent dusk"></div><div>
+              <div class="row-title">Walk notes</div>
+              <div class="row-preview">Leave room between the grid lines.</div>
+              <div class="row-meta">Updated 3 days ago</div>
+            </div></div>
+          </div>
+        </div>
+        <div class="gutter"></div>
+        <div class="pane">
+          <div class="stripe"></div>
+          <div class="editor-body">
+            <div class="editor-title">宣纸上的 Folio</div>
+            <div class="editor-text">Partially folded, list and editor share the fold evenly — ink stays on one side of the division, like two pages of a practice book.</div>
+            <div class="editor-meta">Pencil scratch sounds while you write</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<script>
+  const pose = new URLSearchParams(location.search).get("pose") || "outer";
+  document.querySelectorAll(".stage").forEach(el => el.classList.toggle("active", el.id === pose));
+</script>
+</body>
+</html>

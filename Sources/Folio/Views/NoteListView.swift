@@ -74,23 +74,23 @@ struct NoteListView: View {
             FoldGlyph()
                 .frame(width: 44, height: 44)
                 .opacity(0.85)
-            Text(searchText.isEmpty ? "No notes yet" : "Nothing matches")
-                .font(.system(.title3, design: .serif).weight(.semibold))
+            Text(searchText.isEmpty ? "Blank sheet" : "Nothing matches")
+                .font(FolioFont.brushDisplay(28, relativeTo: .title3))
                 .foregroundStyle(FolioTheme.ink)
             Text(searchText.isEmpty
-                 ? "New thoughts land here. Create one and Folio will keep it beside you when you unfold."
+                 ? "A fresh 米字格 page waits. Write with your finger or Apple Pencil — the paper listens."
                  : "Try another word, or clear the search.")
-                .font(.system(.subheadline, design: .default))
+                .font(FolioFont.handwriting(20, relativeTo: .subheadline))
                 .foregroundStyle(FolioTheme.inkSoft)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: 280)
             if searchText.isEmpty {
                 Button(action: onCreate) {
                     Text("New Note")
-                        .font(.headline)
+                        .font(FolioFont.handwriting(22, relativeTo: .headline))
                         .padding(.horizontal, 18)
                         .padding(.vertical, 10)
-                        .background(FolioTheme.ink, in: Capsule(style: .continuous))
+                        .background(FolioTheme.sealRed, in: Capsule(style: .continuous))
                         .foregroundStyle(FolioTheme.paper)
                 }
                 .buttonStyle(.plain)
@@ -118,9 +118,9 @@ struct NoteRow: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack(alignment: .top, spacing: 12) {
-                RoundedRectangle(cornerRadius: 3, style: .continuous)
+                RoundedRectangle(cornerRadius: 2, style: .continuous)
                     .fill(FolioTheme.accentColor(note.accent))
-                    .frame(width: 3, height: 42)
+                    .frame(width: 3, height: 48)
                     .padding(.top, 2)
 
                 VStack(alignment: .leading, spacing: 4) {
@@ -128,19 +128,19 @@ struct NoteRow: View {
                         if note.isPinned {
                             Image(systemName: "pin.fill")
                                 .font(.caption2.weight(.semibold))
-                                .foregroundStyle(FolioTheme.inkSoft)
+                                .foregroundStyle(FolioTheme.sealRed)
                         }
                         Text(note.displayTitle)
-                            .font(.system(.body, design: .serif).weight(.semibold))
+                            .font(FolioFont.brushDisplay(22, relativeTo: .body))
                             .foregroundStyle(FolioTheme.ink)
                             .lineLimit(1)
                     }
                     Text(note.preview)
-                        .font(.subheadline)
+                        .font(FolioFont.handwriting(20, relativeTo: .subheadline))
                         .foregroundStyle(FolioTheme.inkSoft)
                         .lineLimit(2)
                     Text(note.updatedAt, style: .relative)
-                        .font(.caption)
+                        .font(FolioFont.handwriting(14, relativeTo: .caption))
                         .foregroundStyle(FolioTheme.inkSoft.opacity(0.85))
                 }
                 Spacer(minLength: 0)
@@ -149,11 +149,11 @@ struct NoteRow: View {
             .padding(.horizontal, 10)
             .background {
                 if isSelected {
-                    RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .fill(FolioTheme.paperDeep.opacity(0.95))
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .fill(FolioTheme.paperDeep.opacity(0.72))
                         .overlay {
-                            RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                .strokeBorder(FolioTheme.hairline, lineWidth: 1)
+                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                .strokeBorder(FolioTheme.sealRed.opacity(0.28), lineWidth: 1)
                         }
                 }
             }
@@ -161,7 +161,7 @@ struct NoteRow: View {
 
             if showsDivider && !isSelected {
                 Rectangle()
-                    .fill(FolioTheme.hairline)
+                    .fill(FolioTheme.gridRed)
                     .frame(height: 1)
                     .padding(.leading, 25)
             }

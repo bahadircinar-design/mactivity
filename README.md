@@ -44,8 +44,9 @@ Notes are stored on-device with **SwiftData**. No account, no network.
 
 ## Design notes
 
-- Cool slate paper background with a quiet grain — brand mark uses a two-leaf fold glyph
-- Serif titles for the page, system text for the body
+- **Chinese writing paper**: warm rice-paper wash, fibrous texture, and a vermilion **米字格** practice grid
+- **Handwriting fonts**: *Ma Shan Zheng* (brush) for titles / brand, *Caveat* for body ink
+- **Apple Pencil**: tip-down tap + continuous scratch/drag samples simulate pencil-on-paper while you write or Scribble
 - Accent stripe per note (ink, moss, dusk, copper, sea)
 - Pose badge briefly labels Outer / Inner / Folded when the regular-width shell appears
 

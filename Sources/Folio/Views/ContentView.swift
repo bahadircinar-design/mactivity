@@ -27,8 +27,9 @@ struct ContentView: View {
             }
         }
         .background { PaperBackground() }
-        .tint(FolioTheme.moss)
+        .tint(FolioTheme.sealRed)
         .onAppear {
+            PencilPaperSound.shared.prepare()
             NoteSeed.insertIfNeeded(into: modelContext)
             if selectedNoteID == nil {
                 selectedNoteID = notes.first?.id
@@ -149,7 +150,7 @@ struct ContentView: View {
             FolioBrandMark(compact: compact)
             Spacer()
             Text("\(notes.count) notes")
-                .font(.caption.weight(.medium))
+                .font(FolioFont.handwriting(16, relativeTo: .caption))
                 .foregroundStyle(FolioTheme.inkSoft)
         }
         .padding(.horizontal, compact ? 20 : 16)

@@ -10,13 +10,13 @@ enum NoteSeed {
 
         let samples: [(String, String, NoteAccent, Bool)] = [
             (
-                "Welcome to Folio",
+                "宣纸上的 Folio",
                 """
-                Folio is built for iPhone Duo.
+                Folio opens like a sheet of Chinese practice paper — warm rice fiber, faint 米字格, vermilion guides.
 
-                Closed, capture a thought on the outer display. Opened, browse and write side by side. Partially folded, the list and editor share the fold evenly — nothing stretches across the crease.
+                Closed on Duo’s outer display, capture a line. Opened, browse and write across the fold. With Apple Pencil, each stroke answers with a soft pencil-on-paper sound.
 
-                Tap New Note (it stays visible longest when the bar gets tight) and start writing.
+                写吧。The grid is waiting.
                 """,
                 .moss,
                 true
@@ -30,7 +30,7 @@ enum NoteSeed {
                 - Dark chocolate
                 - Sparkling water
 
-                Prop Duo like a laptop: list above the fold, editor below for quick checks while you shop.
+                Prop Duo like a laptop: list above the fold, editor below while you shop.
                 """,
                 .sea,
                 false
@@ -40,7 +40,7 @@ enum NoteSeed {
                 """
                 The light on the water was the color of cold steel.
 
-                Remember: shorter sentences land harder. Leave room for the fold — white space is a feature.
+                Remember: shorter sentences land harder. Leave room between the grid lines — white space is a feature.
                 """,
                 .dusk,
                 false

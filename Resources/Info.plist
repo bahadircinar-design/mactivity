@@ -45,5 +45,11 @@
 		<key>UIApplicationSupportsMultipleScenes</key>
 		<true/>
 	</dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Caveat-Variable.ttf</string>
+		<string>MaShanZheng-Regular.ttf</string>
+	</array>
 </dict>
 </plist>
+
